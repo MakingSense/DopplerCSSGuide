@@ -1,0 +1,23 @@
+{
+  "name": "dopplercssguide",
+  "version": "0.0.1",
+  "description": "Doppler CSS Style Guide App",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MakingSense/DopplerCSSGuide.git"
+  },
+  "author": "Doppler Team",
+  "devDependencies": {
+    "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "scripts": {
+    "commit": "git-cz"
+  }
+}
