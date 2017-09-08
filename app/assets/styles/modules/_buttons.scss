@@ -1,0 +1,100 @@
+// *************************************
+//
+//   Buttons
+//
+// *************************************
+
+// -------------------------------------
+//   Variables
+// -------------------------------------
+
+
+// -------------------------------------
+//   Base
+// -------------------------------------
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+.button {
+  border: 0;
+  border-radius: 3px;
+  color: $color-white;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 16px;
+  padding: 1rem 2rem;
+  text-align: center;
+  transition: $transition-default;
+  &[disabled]{
+    opacity: .4;
+    pointer-events: none;
+  }
+}
+
+.button--primary {
+  background: $color-green;
+  &:hover,
+  &:active {
+    background: #00853a;
+  }
+}
+
+.button--alternative {
+  background: #94917f;
+  &:hover {
+    background: #767361;
+  }
+}
+
+.button--transparent {
+  background: transparent;
+  border: 1px solid $color-white;
+  &:hover {
+    background: rgba(255,255,255,.2);
+  }
+}
+
+.button--transparent-primary {
+  background: transparent;
+  border: 1px solid $color-green;
+  color: $color-green;
+  &:hover {
+    background: rgba(51,173,115,.2);
+  }
+}
+
+.button--white {
+  background: $color-white;
+  border: 1px solid $color-white;
+  color: $base_font-color;
+}
+
+.button--delete {
+  background: #E4594C;
+}
+
+.button--error {
+  background: $color-red;
+  &:hover {
+    background: $color-red;
+  }
+}
+
+.button--warning {
+  background: $primary-color;
+}
+
+.button--small {
+  font-size: 13px;
+  padding: 11px 15px;
+}
+
+.button--tiny {
+  font-size: 13px;
+  padding: 10px 20px;
+}
+
