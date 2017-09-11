@@ -12,15 +12,9 @@ var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
-
+var sourcemaps = require('gulp-sourcemaps');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
-
-/*var browserify = require("browserify");
-var source = require('vinyl-source-stream');
-var tsify = require("tsify");*/
-
-
 
 var isDevelopment = false;
 
@@ -34,23 +28,6 @@ var paths = {
 	build: 'build'
 };
 
-gulp.task("testtypescript", function () {
-    return tsProject.src()
-        .pipe(tsProject())
-        .js.pipe(gulp.dest("build"));
-});
-
-/*gulp.task("testbrowserify", function () {
-    return browserify({
-        basedir: '.',
-        debug: true,
-       	entries: ['app/main.ts', 'app/controllers/mainCtrl.ts']
-    })
-    .plugin(tsify)
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(paths.build));
-});*/
 
 /**
  * Compile sass files to css.
@@ -89,6 +66,9 @@ gulp.task('watch', function () {
 		paths.styles + '/**/*.scss'
 	], ['build','reload']);
 	gulp.watch([
+		paths.app + '/**/*.ts'
+	], ['build','reload']);
+	gulp.watch([
 		paths.icons + '*.svg'
 	], ['webfont','build','reload']);
 });
@@ -123,8 +103,7 @@ gulp.task('webfont',function(){
 gulp.task('connect', function() {
   connect.server({
     root: 'build',
-    livereload: true,
-    port: 8000
+    livereload: true
   });
 });
 
@@ -151,14 +130,17 @@ gulp.task('build-scripts-lib', function() {
 
 gulp.task('build-scripts-app', function() {
 	var sources = gulp.src([
-		paths.app + '/app.js',
-		'!app/lib/**/*.js',
-		paths.app + '/**/*.js'
+		paths.app + '/app.ts',
+		paths.app + '/**/*.ts'
 	]);
-	sources
-		.pipe(concat('app.min.js'))
-		.pipe(gulpIf(!isDevelopment, uglify()))
-		.pipe(gulp.dest(paths.build + '/scripts'));
+    return sources
+    	.pipe(sourcemaps.init())
+        .pipe(ts({
+            outFile: 'app.min.js'
+        }))
+        .pipe(sourcemaps.write())
+        .pipe(gulpIf(!isDevelopment, uglify()))
+        .pipe(gulp.dest(paths.build + '/scripts'));
 });
 
 gulp.task('build-scripts', [

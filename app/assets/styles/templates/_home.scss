@@ -3,3 +3,35 @@
 //   Home
 //
 // *************************************
+
+body {
+	display: flex;
+}
+.panel {
+	background: #f6f6f6;
+	border-right: 1px solid #ccc;
+	height: 100%;
+	width: 15%;
+	padding: 20px;
+}
+
+.primary--nav {
+	li {
+		padding: 10px 0;
+		color: #333;
+	}
+}
+
+.main {
+	width: 75%;
+	background: #fff;
+	max-height: 100%;
+	padding: 50px;
+}
+
+.field--group {
+	label {
+		display: block;
+		margin-bottom: 10px;
+	}
+}

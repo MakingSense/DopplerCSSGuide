@@ -13,9 +13,26 @@
 </head>
 
 <body ng-app="dopplerCssGuideApp">
-  <div ng-controller="MainCtrl">
-    {{foo}}
+  <nav class="panel" ng-controller="PanelCtrl">
+    <ul class="primary--nav">
+      <li ng-repeat="item in components">
+        {{item.name}}
+      </li>
+    </ul>
+  </nav>
+  <div class="main" ng-controller="MainCtrl">
+    <form>
+      <div class="field--group">
+        <label>Nuevo componente: {{componentName}}</label>
+        <input type="text" name="componentName" ng-model="componentName">  
+      </div>
+      <button class="button" ng-click="save()">Guardar</button>
+    </form>
+    <p>Obtener nuevo componente</p>
+    <button class="button" ng-click="getComponent(component.id)">Cargar</button>
+    <p ng-if="showNewComponent">{{component.name}}</p>
   </div>
+  
   <!-- inject:js -->
   <!-- endinject -->
 </body>
