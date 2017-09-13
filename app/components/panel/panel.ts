@@ -1,16 +1,14 @@
 (function () {
   'use strict';
-
+  
   angular
     .module('dopplerCssGuideApp')
-    .controller('PanelCtrl', PanelCtrl);
+    .component('panel', {
+      templateUrl: 'panel.html',
+      controller: PanelController
+    });
 
-  PanelCtrl.$inject = [
-    '$scope',
-    'componentService'
-  ];
-
-  function PanelCtrl($scope: ng.IScope, componentService) {
+  function PanelController($scope: ng.IScope, componentService) {
     $scope.components = [];
 
     componentService.getComponents()

@@ -63,9 +63,7 @@ gulp.task('autoprefixer', ['styles'], function () {
 gulp.task('watch', function () {
 
 	gulp.watch([
-		paths.styles + '/**/*.scss'
-	], ['build','reload']);
-	gulp.watch([
+		paths.styles + '/**/*.scss',
 		paths.app + '/**/*.ts'
 	], ['build','reload']);
 	gulp.watch([
