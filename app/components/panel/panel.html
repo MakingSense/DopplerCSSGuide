@@ -1,7 +1,7 @@
-﻿<nav >
+﻿<nav>
 	<ul class="primary--nav">
-	  <li ng-repeat="item in components">
-	    {{item.name}}
+	  <li ng-repeat="item in $ctrl.components">
+	    {{item._source.name}}
 	  </li>
 	</ul>
 </nav>

@@ -1,9 +1,8 @@
-(function () {
-  'use strict';
+/// <reference path="types.ts"/>
 
-  angular.module('dopplerCssGuideApp', []);
+  var app = angular.module('dopplerCssGuideApp', []);
 
-})();
+
 
 
 

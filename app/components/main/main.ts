@@ -1,25 +1,38 @@
-(function () {
-  'use strict';
-  
-  angular
-    .module('dopplerCssGuideApp')
-    .component('main', {
-      templateUrl: 'main.html',
-      controller: MainController
-    });
+class MainController {
+ 
+  public component:Component;
+  public componentName:string;
 
-  function MainController($scope: ng.IScope, componentService) {
-    $scope.componentName = ''; 
-    $scope.component = {};
-    $scope.showNewComponent = false;
-    $scope.save = function () {
-       $scope.component = componentService.create($scope.componentName);
-    };
+  constructor(private componentService:ComponentService) {
 
-    $scope.getComponent = function (id) {
-      $scope.component = componentService.getComponent(id);
-      $scope.showNewComponent = true;
-    }
   }
 
-})();
+  getComponent():void {
+    this.componentService.getComponent(this.component._id)
+      .then((response: any):void => { 
+        this.component = response;
+      });
+  }
+
+  createComponent():void {
+    this.componentService.createComponent(this.componentName)
+      .then((response: any):void => {
+        this.component = response;
+      });
+  }
+
+}
+
+class Main implements ng.IComponentOptions {
+ 
+  public controller:any;
+  public templateUrl:string;
+
+  constructor() {
+    this.controller = MainController;
+    this.templateUrl = 'main.html';
+  }
+
+}
+
+app.component('main',new Main());

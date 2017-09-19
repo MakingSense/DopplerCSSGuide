@@ -1,20 +1,24 @@
-(function () {
-  'use strict';
-  
-  angular
-    .module('dopplerCssGuideApp')
-    .component('panel', {
-      templateUrl: 'panel.html',
-      controller: PanelController
-    });
+class PanelController {
+ 
+  public components:Component[];
 
-  function PanelController($scope: ng.IScope, componentService) {
-    $scope.components = [];
-
+  constructor(private componentService:ComponentService) {
     componentService.getComponents()
-      .then(function(data) {
-          $scope.components = data;
-      });
+      .then((response:any):void => { this.components = response })
+
+  }
+}
+
+class Panel implements ng.IComponentOptions {
+ 
+  public controller:any;
+  public templateUrl:string;
+
+  constructor() {
+    this.controller = PanelController;
+    this.templateUrl = 'panel.html';
   }
 
-})();
+}
+ 
+app.component('panel',new Panel());
