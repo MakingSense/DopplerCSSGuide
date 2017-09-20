@@ -1,0 +1,12 @@
+﻿<form class="form">
+	<div class="field--group">
+			<label>Nuevo componente: {{componentName}}</label>
+			<input type="text" name="componentName" ng-model="$ctrl.componentName">  
+	</div>
+	<button class="button" ng-click="$ctrl.createComponent()">Crear</button>
+</form>
+<br/>
+<br/>
+<p>Cargar componente</p>
+<button class="button" ng-click="$ctrl.getComponent()">Cargar</button>
+<p ng-if="$ctrl.component">{{$ctrl.component._source.name}}</p>

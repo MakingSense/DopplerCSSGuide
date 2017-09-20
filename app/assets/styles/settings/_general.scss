@@ -1,0 +1,83 @@
+// *************************************
+//
+//   Settings
+//   -> Fonts, Variables
+//
+// *************************************
+
+
+// Uncomment the following line to debug layout's box model.
+// @include edit();
+
+
+// -------------------------------------
+//   @font-face
+// -------------------------------------
+
+$base_font-size: 15px;
+$base_font-weight: 400;
+$base_font-family:   Arial, helvetica, sans-serif;
+$base_font: $base_font-weight $base_font-size $base_font-family;
+
+
+
+// -------------------------------------
+//   Font colors
+// -------------------------------------
+
+$color-white: #fff;
+$base_font-color--dark:       #000;
+$base_font-color--dark-grey: #333;
+$base_font-color: #666;
+$base_font-color--light: #999;
+$base_font-color--hover: #838370;
+$base_link-color: #33AC72;
+$base_link-color--hover: #008046;
+$base_font-color--error: #E55A4C;
+
+// -------------------------------------
+//   Backgrounds
+// -------------------------------------
+
+$base_background: $color-white;
+$gray_background: #F6F6F6;
+$yellow_background: #FCE579;
+
+
+// -------------------------------------
+//   Transition
+// -------------------------------------
+
+$transition-default :all .3s ease;
+
+// -------------------------------------
+//   Other
+// -------------------------------------
+
+$border-radius-default : 5px;
+$primary-color: #FBB224;
+$darkyellow-color:#E58900;
+$wrapper-max-width : 1300px;
+$color-green : #33AD73;
+$color-green-light: #65C192;
+$color-sylver : #ccc;
+$color-snow: #eaeaea;
+$color-red: #E34F45;
+$color-darkred: #A63A33;
+
+$padding-wrapper: 6.5%;
+$padding-header-footer: 2%;
+
+$header-footer-height: 70px;
+
+// -------------------------------------
+//   Breakpoints
+// -------------------------------------
+$doppler-breakpoints: (
+  'desktop-fhd': (max-width: 1920px),
+  'desktop': (max-width: 1366px),
+  'ipad': (min-width: 1023px, max-width: 1024px),
+  'isdesktop': (min-width: 1024px),
+  'ismobile': (max-width: 1024px),
+  'iphone': (max-width: 980px)
+);

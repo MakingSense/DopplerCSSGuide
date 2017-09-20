@@ -1,0 +1,28 @@
+// *************************************
+//
+//   Buttons
+//
+// *************************************
+
+button {
+  &:focus {
+    outline: none;
+  }
+}
+
+.button {
+  border: 0;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 16px;
+  padding: 1rem 2rem;
+  text-align: center;
+  /*transition: $transition-default;*/
+  &[disabled]{
+    opacity: .4;
+    pointer-events: none;
+  }
+}
+
