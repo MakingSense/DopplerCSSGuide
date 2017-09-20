@@ -1,2 +1,8 @@
-node_modules
+bower_components/
+node_modules/
 package-lock.json
+build/
+css/
+fonts/
+app/lib/
+app/assets/libs/
