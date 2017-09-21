@@ -1,22 +1,21 @@
 class MainController {
- 
-  public component:Component;
-  public componentName:string;
+  public component: Component;
+  public componentName: string;
 
-  constructor(private componentService:ComponentService) {
+  constructor (private componentService: ComponentService) {
 
   }
 
-  getComponent():void {
+  public getComponent (): void {
     this.componentService.getComponent(this.component._id)
-      .then((response: any):void => { 
+      .then((response: any): void => {
         this.component = response;
       });
   }
 
-  createComponent():void {
+  public createComponent (): void {
     this.componentService.createComponent(this.componentName)
-      .then((response: any):void => {
+      .then((response: any): void => {
         this.component = response;
       });
   }
@@ -24,15 +23,14 @@ class MainController {
 }
 
 class Main implements ng.IComponentOptions {
- 
-  public controller:any;
-  public templateUrl:string;
+  public controller: any;
+  public templateUrl: string;
 
-  constructor() {
+  constructor () {
     this.controller = MainController;
     this.templateUrl = 'main.html';
   }
 
 }
 
-app.component('main',new Main());
+app.component('main', new Main());
