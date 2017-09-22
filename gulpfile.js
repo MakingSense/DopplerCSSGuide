@@ -15,7 +15,10 @@ var gulpIf = require('gulp-if');
 var sourcemaps = require('gulp-sourcemaps');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
+var gulpTslint = require("gulp-tslint");
+var tslint = require("tslint");
 
+var program = tslint.Linter.createProgram("./tsconfig.json");
 var isDevelopment = false;
 
 var paths = {
@@ -27,6 +30,20 @@ var paths = {
 	lib: 'app/lib',
 	build: 'build'
 };
+
+
+gulp.task("tslint", function () {
+	var sources = gulp.src([
+		paths.app + '/app.ts',
+		paths.app + '/**/*.ts'
+	]);
+    sources
+        .pipe(gulpTslint({
+            formatter: "verbose",
+            program: program
+        }))
+        .pipe(gulpTslint.report())
+});
 
 
 /**
@@ -126,7 +143,7 @@ gulp.task('build-scripts-lib', function() {
 		.pipe(gulp.dest(paths.build + '/scripts'));
 });
 
-gulp.task('build-scripts-app', function() {
+gulp.task('build-scripts-app', ['tslint'], function() {
 	var sources = gulp.src([
 		paths.app + '/app.ts',
 		paths.app + '/**/*.ts'

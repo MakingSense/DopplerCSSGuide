@@ -1,6 +1,6 @@
 /// <reference path="types.ts"/>
 
-  var app = angular.module('dopplerCssGuideApp', []);
+  let app = angular.module('dopplerCssGuideApp', []);
 
 
 

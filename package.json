@@ -26,10 +26,12 @@
     "gulp-inject": "^4.2.0",
     "gulp-sass": "~2.0.4",
     "gulp-sourcemaps": "~1.9.1",
+    "gulp-tslint": "^8.1.2",
     "gulp-typescript": "^3.2.2",
     "gulp-uglify": "^3.0.0",
     "node-sass": "~2.1.1",
     "run-sequence": "^2.1.0",
+    "tslint": "^5.7.0",
     "typescript": "^2.5.2"
   },
   "config": {
