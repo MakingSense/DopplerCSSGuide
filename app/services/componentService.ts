@@ -28,4 +28,6 @@ class ComponentService {
 
 }
 
-app.service('componentService', ComponentService);
+export default ComponentService;
+
+

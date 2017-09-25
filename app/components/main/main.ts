@@ -1,3 +1,4 @@
+import ComponentService from '../../services/componentService';
 class MainController {
   public component: Component;
   public componentName: string;
@@ -33,4 +34,6 @@ class Main implements ng.IComponentOptions {
 
 }
 
-app.component('main', new Main());
+export default Main;
+
+
