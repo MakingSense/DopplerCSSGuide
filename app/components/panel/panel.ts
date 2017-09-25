@@ -1,3 +1,4 @@
+import ComponentService from '../../services/componentService';
 class PanelController {
   public components: Component[];
 
@@ -18,4 +19,5 @@ class Panel implements ng.IComponentOptions {
     this.templateUrl = 'panel.html';
   }
 }
-app.component('panel', new Panel() );
+ export default Panel;
+
