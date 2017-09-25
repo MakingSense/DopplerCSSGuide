@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
 	"noImplicitAny": true,
-	"target": "es5",
-	"module": "system",
-	"outFile": "app.min.js"
+	"target": "es5"
   }
 }

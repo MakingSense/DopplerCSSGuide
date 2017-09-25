@@ -1,5 +1,5 @@
-import {app} from '../app';
-export class ComponentService {
+import app = require('../app');
+class ComponentService {
 
   constructor (private $http: ng.IHttpService) {
   }
@@ -28,5 +28,7 @@ export class ComponentService {
   }
 
 }
+
+export = ComponentService;
 
 app.service('componentService', ComponentService);

@@ -1,8 +1,8 @@
 import {module} from 'angular';
 
-export let app = module('dopplerCssGuideApp', []);
+let app = module('dopplerCssGuideApp', []);
 
-
+export = app;
 
 
 

@@ -1,5 +1,5 @@
-import {app} from '../../app';
-import {ComponentService} from '../../services/componentService';
+import app = require('../../app');
+import ComponentService = require('../../services/componentService');
 class PanelController {
   public components: Component[];
 
