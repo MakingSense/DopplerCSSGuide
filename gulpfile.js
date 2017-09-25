@@ -150,9 +150,7 @@ gulp.task('build-scripts-app', ['tslint'], function() {
 	]);
     return sources
     	.pipe(sourcemaps.init())
-        .pipe(ts({
-            outFile: 'app.min.js'
-        }))
+        .pipe(ts())
         .pipe(sourcemaps.write())
         .pipe(gulpIf(!isDevelopment, uglify()))
         .pipe(gulp.dest(paths.build + '/scripts'));

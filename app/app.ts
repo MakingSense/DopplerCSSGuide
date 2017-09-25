@@ -1,7 +1,6 @@
-/// <reference path="types.ts"/>
+import {module} from 'angular';
 
-  let app = angular.module('dopplerCssGuideApp', []);
-
+export let app = module('dopplerCssGuideApp', []);
 
 
 

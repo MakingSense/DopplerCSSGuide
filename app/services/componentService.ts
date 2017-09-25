@@ -1,4 +1,5 @@
-class ComponentService {
+import {app} from '../app';
+export class ComponentService {
 
   constructor (private $http: ng.IHttpService) {
   }

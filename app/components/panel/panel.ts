@@ -1,3 +1,5 @@
+import {app} from '../../app';
+import {ComponentService} from '../../services/componentService';
 class PanelController {
   public components: Component[];
 
@@ -19,3 +21,4 @@ class Panel implements ng.IComponentOptions {
   }
 }
 app.component('panel', new Panel() );
+
