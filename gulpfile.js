@@ -18,7 +18,7 @@ var tsProject = ts.createProject("tsconfig.json");
 var gulpTslint = require("gulp-tslint");
 var tslint = require("tslint");
 
-var program = tslint.Linter.createProgram("./tsconfig.json");
+//var program = tslint.Linter.createProgram("./tsconfig.json");
 var isDevelopment = false;
 
 var paths = {
@@ -143,7 +143,7 @@ gulp.task('build-scripts-lib', function() {
 		.pipe(gulp.dest(paths.build + '/scripts'));
 });
 
-gulp.task('build-scripts-app', ['tslint'], function() {
+gulp.task('build-scripts-app', /*['tslint'],*/ function() {
 	var sources = gulp.src([
 		paths.app + '/app.ts',
 		paths.app + '/**/*.ts'
@@ -151,8 +151,8 @@ gulp.task('build-scripts-app', ['tslint'], function() {
     return sources
     	.pipe(sourcemaps.init())
         .pipe(ts({
-        	module: 'amd',
-            outFile: 'app.min.js'
+        	noImplicitAny: true,
+			target: "es5"
         }))
         .pipe(sourcemaps.write())
         .pipe(gulpIf(!isDevelopment, uglify()))

@@ -1,8 +1,10 @@
-import {module} from 'angular';
+import * as angular from 'angular';
+import Main from './components/main/main';
+import Panel from './components/panel/panel';
+import ComponentService from './services/componentService';
 
-let app = module('dopplerCssGuideApp', []);
+let app = angular.module('dopplerCssGuideApp', []);
 
-export = app;
-
-
-
+app.component('main', new Main());
+app.component('panel', new Panel() );
+app.service('componentService', ComponentService);

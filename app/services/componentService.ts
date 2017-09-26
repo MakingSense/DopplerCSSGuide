@@ -1,4 +1,3 @@
-import app = require('../app');
 class ComponentService {
 
   constructor (private $http: ng.IHttpService) {
@@ -29,6 +28,6 @@ class ComponentService {
 
 }
 
-export = ComponentService;
+export default ComponentService;
 
-app.service('componentService', ComponentService);
+
