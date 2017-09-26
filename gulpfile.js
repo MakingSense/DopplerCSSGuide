@@ -18,6 +18,10 @@ var tsProject = ts.createProject("tsconfig.json");
 var gulpTslint = require("gulp-tslint");
 var tslint = require("tslint");
 
+var browserify = require("browserify");
+var source = require('vinyl-source-stream');
+var tsify = require("tsify");
+
 //var program = tslint.Linter.createProgram("./tsconfig.json");
 var isDevelopment = false;
 
@@ -45,6 +49,22 @@ gulp.task("tslint", function () {
         .pipe(gulpTslint.report())
 });
 
+
+gulp.task("browserify", function () {
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: ['app/app.ts'],
+        cache: {},
+        packageCache: {}
+    })
+    .plugin(tsify, {
+    	
+    })
+    .bundle()
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest(paths.build));
+});
 
 /**
  * Compile sass files to css.
@@ -149,12 +169,15 @@ gulp.task('build-scripts-app', /*['tslint'],*/ function() {
 		paths.app + '/**/*.ts'
 	]);
     return sources
-    	.pipe(sourcemaps.init())
+    	//.pipe(sourcemaps.init())
         .pipe(ts({
         	noImplicitAny: true,
-			target: "es5"
+			target: "es5",
+			module: "commonjs",
+   			moduleResolution: "node",
+   			sourceMap: true
         }))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulpIf(!isDevelopment, uglify()))
         .pipe(gulp.dest(paths.build + '/scripts'));
 });

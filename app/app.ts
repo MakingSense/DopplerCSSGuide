@@ -1,4 +1,4 @@
-import * as angular from 'angular';
+import angular from '@types/angular';
 import Main from './components/main/main';
 import Panel from './components/panel/panel';
 import ComponentService from './services/componentService';
