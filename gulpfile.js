@@ -32,7 +32,8 @@ var paths = {
 	css: 'app/css',
 	icons: 'app/assets/icons/',
 	lib: 'app/lib',
-	build: 'build'
+	build: 'build',
+	build_ts: 'tsc_output'
 };
 
 
@@ -59,8 +60,8 @@ gulp.task("browserify", function () {
         packageCache: {}
     })
     .plugin(tsify, {
-    	
-    })
+		
+	})
     .bundle()
     .pipe(source('bundle.js'))
     .pipe(gulp.dest(paths.build));
@@ -102,10 +103,10 @@ gulp.task('watch', function () {
 	gulp.watch([
 		paths.styles + '/**/*.scss',
 		paths.app + '/**/*.ts'
-	], ['build','reload']);
+	], ['build-ts','reload']);
 	gulp.watch([
 		paths.icons + '*.svg'
-	], ['webfont','build','reload']);
+	], ['webfont','build-ts','reload']);
 });
 
 var runTimestamp = Math.round(Date.now()/1000);
@@ -157,10 +158,14 @@ gulp.task('build-scripts-lib', function() {
 	var sources = gulp.src([
 		paths.lib + '/angular/angular.js'
 	]);
-	sources
-		.pipe(concat('lib.min.js'))
-		.pipe(gulpIf(!isDevelopment, uglify()))
-		.pipe(gulp.dest(paths.build + '/scripts'));
+	sources.pipe(gulp.dest(paths.build + '/vendor'));
+});
+
+gulp.task('build-scripts-app2', /*['tslint'],*/ function() {
+	var sources = gulp.src([
+		paths.build_ts + '/**/*.js'
+	]);
+    return sources.pipe(gulp.dest(paths.build));
 });
 
 gulp.task('build-scripts-app', /*['tslint'],*/ function() {
@@ -171,11 +176,12 @@ gulp.task('build-scripts-app', /*['tslint'],*/ function() {
     return sources
     	//.pipe(sourcemaps.init())
         .pipe(ts({
-        	noImplicitAny: true,
+			noImplicitAny: true,
 			target: "es5",
 			module: "commonjs",
-   			moduleResolution: "node",
-   			sourceMap: true
+			moduleResolution: "node",
+			sourceMap: true,
+			typeRoots: [ "node_modules/@types" ]
         }))
         //.pipe(sourcemaps.write())
         .pipe(gulpIf(!isDevelopment, uglify()))
@@ -184,7 +190,7 @@ gulp.task('build-scripts-app', /*['tslint'],*/ function() {
 
 gulp.task('build-scripts', [
 	'build-scripts-lib',
-	'build-scripts-app'
+	'build-scripts-app2'
 ]);
 
 /**
@@ -203,11 +209,36 @@ gulp.task('build-styles', ['autoprefixer'], function() {
  * Inject scripts and css in index.html and copy to build path
  * Relies on: "gulp-inject".
  */
-gulp.task('build', ['build-scripts', 'build-styles'], function() {
+gulp.task('build', ['build-scripts', 'build-styles', 'browserify'], function() {
 	var sources = gulp.src([
 	    paths.build + '/scripts/lib*.js',
 	    paths.build + '/scripts/app*.js',
-	    paths.build + '/css/styles*.css'
+		paths.build + '/css/styles*.css',
+		
+	], {
+	    read: false // It's not necessary to read the files (will speed up things), we're only after their paths.
+	});
+
+	return gulp.src([
+			paths.app + '/index.html'
+		])
+		.pipe(inject(sources, {
+			addRootSlash: false, // ensures proper relative paths
+      		ignorePath: paths.build + '/' // ensures proper relative paths
+		}))
+		.pipe(gulp.dest(paths.build));
+});
+
+/**
+ * Inject scripts and css in index.html and copy to build path
+ * Relies on: "gulp-inject".
+ */
+gulp.task('build-ts', ['build-scripts', 'build-styles'], function() {
+	var sources = gulp.src([
+	    paths.build + '/vendor/*.js',
+	    paths.build + '/app*.js',
+		paths.build + '/css/styles*.css',
+		
 	], {
 	    read: false // It's not necessary to read the files (will speed up things), we're only after their paths.
 	});
@@ -232,7 +263,7 @@ gulp.task('default', function(){
 	runSequence(
 		'webfont',
 		'connect',
-		'build',
+		'build-ts',
 		'watch'
 	);
 });
