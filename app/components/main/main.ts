@@ -30,7 +30,7 @@ class Main implements ng.IComponentOptions {
 
   constructor () {
     this.controller = MainController;
-    this.templateUrl = 'main.html';
+    this.templateUrl = require('./main.html');
   }
 
 }
