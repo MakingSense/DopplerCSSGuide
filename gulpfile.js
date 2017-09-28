@@ -21,6 +21,7 @@ var tslint = require("tslint");
 var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var tsify = require("tsify");
+var webpack = require("webpack-stream");
 
 //var program = tslint.Linter.createProgram("./tsconfig.json");
 var isDevelopment = false;
@@ -32,40 +33,8 @@ var paths = {
 	css: 'app/css',
 	icons: 'app/assets/icons/',
 	lib: 'app/lib',
-	build: 'build',
-	build_ts: 'tsc_output'
+	build: 'build'
 };
-
-
-gulp.task("tslint", function () {
-	var sources = gulp.src([
-		paths.app + '/app.ts',
-		paths.app + '/**/*.ts'
-	]);
-    sources
-        .pipe(gulpTslint({
-            formatter: "verbose",
-            program: program
-        }))
-        .pipe(gulpTslint.report())
-});
-
-
-gulp.task("browserify", function () {
-    return browserify({
-        basedir: '.',
-        debug: true,
-        entries: ['app/app.ts'],
-        cache: {},
-        packageCache: {}
-    })
-    .plugin(tsify, {
-		
-	})
-    .bundle()
-    .pipe(source('bundle.js'))
-    .pipe(gulp.dest(paths.build));
-});
 
 /**
  * Compile sass files to css.
@@ -151,48 +120,6 @@ gulp.task('reload', function() {
 	connect.reload();
 });
 
-
-
-
-gulp.task('build-scripts-lib', function() {
-	var sources = gulp.src([
-		paths.lib + '/angular/angular.js'
-	]);
-	sources.pipe(gulp.dest(paths.build + '/vendor'));
-});
-
-gulp.task('build-scripts-app2', /*['tslint'],*/ function() {
-	var sources = gulp.src([
-		paths.build_ts + '/**/*.js'
-	]);
-    return sources.pipe(gulp.dest(paths.build));
-});
-
-gulp.task('build-scripts-app', /*['tslint'],*/ function() {
-	var sources = gulp.src([
-		paths.app + '/app.ts',
-		paths.app + '/**/*.ts'
-	]);
-    return sources
-    	//.pipe(sourcemaps.init())
-        .pipe(ts({
-			noImplicitAny: true,
-			target: "es5",
-			module: "commonjs",
-			moduleResolution: "node",
-			sourceMap: true,
-			typeRoots: [ "node_modules/@types" ]
-        }))
-        //.pipe(sourcemaps.write())
-        .pipe(gulpIf(!isDevelopment, uglify()))
-        .pipe(gulp.dest(paths.build + '/scripts'));
-});
-
-gulp.task('build-scripts', [
-	'build-scripts-lib',
-	'build-scripts-app2'
-]);
-
 /**
  * Minify and move compiled css to build path.
  * Relies on: "gulp-clean-css".
@@ -205,37 +132,19 @@ gulp.task('build-styles', ['autoprefixer'], function() {
     .pipe(gulp.dest(paths.build + '/css'));
 });
 
-/**
- * Inject scripts and css in index.html and copy to build path
- * Relies on: "gulp-inject".
- */
-gulp.task('build', ['build-scripts', 'build-styles', 'browserify'], function() {
-	var sources = gulp.src([
-	    paths.build + '/scripts/lib*.js',
-	    paths.build + '/scripts/app*.js',
-		paths.build + '/css/styles*.css',
-		
-	], {
-	    read: false // It's not necessary to read the files (will speed up things), we're only after their paths.
-	});
-
-	return gulp.src([
-			paths.app + '/index.html'
-		])
-		.pipe(inject(sources, {
-			addRootSlash: false, // ensures proper relative paths
-      		ignorePath: paths.build + '/' // ensures proper relative paths
-		}))
-		.pipe(gulp.dest(paths.build));
+gulp.task('run-webpack', function() {
+	return gulp.src(paths.app + 'app.ts')
+	.pipe(webpack(require('./webpack.config')))
+	.pipe(gulp.dest(paths.build));
 });
 
 /**
  * Inject scripts and css in index.html and copy to build path
  * Relies on: "gulp-inject".
  */
-gulp.task('build-ts', ['build-scripts', 'build-styles'], function() {
+gulp.task('build', ['run-webpack', 'build-styles'], function() {
 	var sources = gulp.src([
-	    paths.build + '/vendor/*.js',
+	    paths.build + '/vendor*.js',
 	    paths.build + '/app*.js',
 		paths.build + '/css/styles*.css',
 		
@@ -263,7 +172,7 @@ gulp.task('default', function(){
 	runSequence(
 		'webfont',
 		'connect',
-		'build-ts',
+		'build',
 		'watch'
 	);
 });
