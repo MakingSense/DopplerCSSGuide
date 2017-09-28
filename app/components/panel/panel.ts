@@ -16,7 +16,7 @@ class Panel implements ng.IComponentOptions {
 
   constructor () {
     this.controller = PanelController;
-    this.templateUrl = 'panel.html';
+    this.templateUrl = require('./panel.html');
   }
 }
  export default Panel;

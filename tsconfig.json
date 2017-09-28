@@ -1,17 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "./tsc_output",
     "target": "es5",
-    "module": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
     "sourceMap": true,
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "./app/**/*"
-  ],
-  "exclude": [
-    "./app/assets/*"
-  ]
+  }
 }
