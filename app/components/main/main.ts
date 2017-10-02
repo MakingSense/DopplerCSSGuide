@@ -1,11 +1,18 @@
 import ComponentService from '../../services/componentService';
 
-class MainController {
+interface IMainController {
+  component: Component;
+  componentName: string;
+  getComponent (): void;
+  createComponent (): void;
+}
+
+class MainController implements IMainController {
   public component: Component;
   public componentName: string;
 
   constructor (private componentService: ComponentService) {
-
+    this.componentName = '';
   }
 
   public getComponent (): void {
