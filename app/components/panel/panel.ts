@@ -1,5 +1,10 @@
 import ComponentService from '../../services/componentService';
-class PanelController {
+
+interface IPanelController {
+  components: Component[];
+}
+
+class PanelController implements IPanelController {
   public components: Component[];
 
   constructor (private componentService: ComponentService) {
