@@ -7,23 +7,18 @@ var iconfont = require('gulp-iconfont');
 var iconfontCss = require('gulp-iconfont-css');
 var connect = require('gulp-connect');
 var inject = require('gulp-inject');
-var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
-var sourcemaps = require('gulp-sourcemaps');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
 var gulpTslint = require("gulp-tslint");
 var tslint = require("tslint");
 
-var browserify = require("browserify");
-var source = require('vinyl-source-stream');
-var tsify = require("tsify");
 var webpack = require("webpack-stream");
 
-//var program = tslint.Linter.createProgram("./tsconfig.json");
+var program = tslint.Linter.createProgram("./tsconfig.json");
 var isDevelopment = false;
 
 var paths = {
@@ -46,6 +41,20 @@ gulp.task('styles', function () {
 	])
 	.pipe(sass().on('error', sass.logError))
 	.pipe(gulp.dest(paths.css));
+});
+
+
+gulp.task("tslint", function () {
+	var sources = gulp.src([
+		paths.app + '/app.ts',
+		paths.app + '/**/*.ts'
+	]);
+    sources
+        .pipe(gulpTslint({
+            formatter: "verbose",
+            program: program
+        }))
+        .pipe(gulpTslint.report())
 });
 
 /**
@@ -142,7 +151,7 @@ gulp.task('run-webpack', function() {
  * Inject scripts and css in index.html and copy to build path
  * Relies on: "gulp-inject".
  */
-gulp.task('build', ['run-webpack', 'build-styles'], function() {
+gulp.task('build', ['tslint', 'run-webpack', 'build-styles'], function() {
 	var sources = gulp.src([
 	    paths.build + '/vendor*.js',
 	    paths.build + '/app*.js',

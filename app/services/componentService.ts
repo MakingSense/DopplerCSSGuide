@@ -1,4 +1,10 @@
-class ComponentService {
+interface IComponentService {
+  createComponent (name: string): ng.IPromise<any>;
+  getComponents (): ng.IPromise<any>;
+  getComponent (id: number): ng.IPromise<any>;
+}
+
+class ComponentService implements IComponentService {
 
   constructor (private $http: ng.IHttpService) {
   }
