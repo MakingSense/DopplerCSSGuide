@@ -7,20 +7,15 @@ var iconfont = require('gulp-iconfont');
 var iconfontCss = require('gulp-iconfont-css');
 var connect = require('gulp-connect');
 var inject = require('gulp-inject');
-var concat = require('gulp-concat');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
 var uglify = require('gulp-uglify');
 var gulpIf = require('gulp-if');
-var sourcemaps = require('gulp-sourcemaps');
 var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
 var gulpTslint = require("gulp-tslint");
 var tslint = require("tslint");
 
-var browserify = require("browserify");
-var source = require('vinyl-source-stream');
-var tsify = require("tsify");
 var webpack = require("webpack-stream");
 
 var program = tslint.Linter.createProgram("./tsconfig.json");
